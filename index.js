@@ -6,7 +6,7 @@ const request = require('request');
 const app = express();
 app.use(bodyParser.json());
 
-const PAGE_ACCESS_TOKEN = 'EAAGnUvcuVawBOZBUHzEOooLTz4yn5BydPj8F4SqHlxcXfNqX5iVB4lo5iZC0VHtP0KZCsHS4pW3ImBcw5pAlbXHkt3SLdjnZA38kiMsUCyi7OupXEezr7sbdZAXCLxIZAu1fcaZAZCbmfyPBH354ZAkaWt7d8FNuSi6PDhXdST0FgfsFM1ouFvAcVZCsPvgrJhWzeLRwZDZD';
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 app.listen(process.env.PORT || 1337, () => {
     console.log('Server is running.');
@@ -14,7 +14,7 @@ app.listen(process.env.PORT || 1337, () => {
 
 // Verifying webhook
 app.get('/webhook', (req, res) => {
-    const VERIFY_TOKEN = 'VUtI"+x1723Dtina';
+    const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
