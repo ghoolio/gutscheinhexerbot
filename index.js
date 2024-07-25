@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
@@ -13,7 +14,7 @@ app.listen(process.env.PORT || 1337, () => {
 
 // Verifying webhook
 app.get('/webhook', (req, res) => {
-    const VERIFY_TOKEN = 'YOUR_VERIFY_TOKEN';
+    const VERIFY_TOKEN = 'VUtI"+x1723Dtina';
 
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
