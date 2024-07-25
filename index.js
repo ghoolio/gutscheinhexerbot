@@ -7,34 +7,37 @@ const app = express();
 app.use(bodyParser.json());
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
-app.listen(process.env.PORT || 1337, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('Server is running.');
 });
 
 // Verifying webhook
 app.get('/webhook', (req, res) => {
-    const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-
+    console.log('Received verification request');
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
     const challenge = req.query['hub.challenge'];
+
+    console.log(`Mode: ${mode}`);
+    console.log(`Token: ${token}`);
+    console.log(`Challenge: ${challenge}`);
 
     if (mode && token) {
         if (mode === 'subscribe' && token === VERIFY_TOKEN) {
             console.log('WEBHOOK_VERIFIED');
             res.status(200).send(challenge);
         } else {
+            console.log('Verification failed');
             res.sendStatus(403);
         }
     }
 });
 
-
 // Handling messages
 app.post('/webhook', (req, res) => {
     const body = req.body;
-    //irgendwas 
 
     if (body.object === 'page') {
         body.entry.forEach(entry => {
